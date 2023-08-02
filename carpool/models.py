@@ -2,10 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
-
 class User(AbstractUser):
     is_driver = models.BooleanField(default=False)
     bio = models.TextField(blank=True)
@@ -14,8 +10,10 @@ class User(AbstractUser):
     pets = models.BooleanField(default=False)
     chat = models.BooleanField(default=False)
     music = models.BooleanField(default=False)
+    ranking = models.FloatField(default=0)
+    rides_given = models.IntegerField(default=0)
+    rides_taken = models.IntegerField(default=0)
 
-    # Add these lines
     groups = models.ManyToManyField(
         "auth.Group",
         verbose_name="groups",
@@ -35,11 +33,22 @@ class User(AbstractUser):
 
 
 class Car(models.Model):
+    FUEL_TYPES = [
+        ("gasoline", "Gasoline"),
+        ("electric", "Electric"),
+        ("gas", "Gas"),
+        ("ethanol", "Ethanol"),
+        ("diesel", "Diesel"),
+    ]
+
     owner = models.ForeignKey(User, related_name="cars", on_delete=models.CASCADE)
     model = models.CharField(max_length=100)
     seats = models.IntegerField()
-    smoking_allowed = models.BooleanField(default=False)
-    pets_allowed = models.BooleanField(default=False)
+    plate = models.CharField(max_length=10)
+    fuel_type = models.CharField(max_length=10, choices=FUEL_TYPES)
+    year = models.IntegerField()
+    brand = models.CharField(max_length=50)
+    last_maintenance = models.DateField(null=True, blank=True)
 
 
 class Trip(models.Model):
@@ -47,20 +56,21 @@ class Trip(models.Model):
         User, related_name="driven_trips", on_delete=models.CASCADE
     )
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    actual_start_location = models.CharField(max_length=200)
+    actual_end_location = models.CharField(max_length=200)
+    actual_start_time = models.DateTimeField()
+    actual_end_time = models.DateTimeField()
+    actual_total_time = models.DurationField()
+    total_carpool_tip = models.FloatField()
+    is_finished = models.BooleanField(default=False)
+
+
+class UserRoute(models.Model):
+    user = models.ForeignKey(User, related_name="user_routes", on_delete=models.CASCADE)
     start_location = models.CharField(max_length=200)
     end_location = models.CharField(max_length=200)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     max_divert_distance = models.FloatField(
-        help_text="Maximum distance the driver is willing to divert from the route, in km"
+        help_text="Maximum distance the user is willing to divert from the route, in km"
     )
-
-
-class TripHistory(models.Model):
-    user = models.ForeignKey(
-        User, related_name="trip_history", on_delete=models.CASCADE
-    )
-    trip = models.ForeignKey(
-        Trip, related_name="trip_history", on_delete=models.CASCADE
-    )
-    price = models.FloatField(help_text="Price paid for the trip")
