@@ -1,33 +1,43 @@
 # Carpool API Documentation
 
-## User Endpoints
+The Carpool API allows for the management of Users, Cars, Trips, and User Routes in the Carpool application. The following endpoints are available.
 
-- **GET /api/users/**: Retrieve a list of all users.
-- **POST /api/users/**: Create a new user. Requires a JSON body with all fields for the User model.
-- **GET /api/users/{id}/**: Retrieve the details of a specific user by their ID.
-- **PUT /api/users/{id}/**: Update a specific user. Requires a JSON body with all fields for the User model.
-- **DELETE /api/users/{id}/**: Delete a specific user.
+## Users
 
-## Car Endpoints
+Users are the people who use the Carpool application. They can be drivers or passengers.
 
-- **GET /api/cars/**: Retrieve a list of all cars.
-- **POST /api/cars/**: Create a new car. Requires a JSON body with all fields for the Car model.
-- **GET /api/cars/{id}/**: Retrieve the details of a specific car by its ID.
-- **PUT /api/cars/{id}/**: Update a specific car. Requires a JSON body with all fields for the Car model.
-- **DELETE /api/cars/{id}/**: Delete a specific car.
+- **GET /api/users/**: Retrieves a list of all users. Each user object includes all User model fields.
+- **POST /api/users/**: Creates a new user. Requires a JSON body with all the User model fields.
+- **GET /api/users/{id}/**: Retrieves the details of a specific user identified by their ID.
+- **PUT /api/users/{id}/**: Updates a specific user identified by their ID. Requires a JSON body with all the User model fields.
+- **DELETE /api/users/{id}/**: Deletes a specific user identified by their ID.
 
-## Trip Endpoints
+## Cars
 
-- **GET /api/trips/**: Retrieve a list of all trips.
-- **POST /api/trips/**: Create a new trip. Requires a JSON body with all fields for the Trip model.
-- **GET /api/trips/{id}/**: Retrieve the details of a specific trip by its ID.
-- **PUT /api/trips/{id}/**: Update a specific trip. Requires a JSON body with all fields for the Trip model.
-- **DELETE /api/trips/{id}/**: Delete a specific trip.
+Cars belong to users and are used for trips.
 
-## User Route Endpoints
+- **GET /api/cars/**: Retrieves a list of all cars. Each car object includes all Car model fields.
+- **POST /api/cars/**: Creates a new car. Requires a JSON body with all the Car model fields.
+- **GET /api/cars/{id}/**: Retrieves the details of a specific car identified by its ID.
+- **PUT /api/cars/{id}/**: Updates a specific car identified by its ID. Requires a JSON body with all the Car model fields.
+- **DELETE /api/cars/{id}/**: Deletes a specific car identified by its ID.
 
-- **GET /api/user_routes/**: Retrieve a list of all user routes.
-- **POST /api/user_routes/**: Create a new user route. Requires a JSON body with all fields for the UserRoute model.
-- **GET /api/user_routes/{id}/**: Retrieve the details of a specific user route by its ID.
-- **PUT /api/user_routes/{id}/**: Update a specific user route. Requires a JSON body with all fields for the UserRoute model.
-- **DELETE /api/user_routes/{id}/**: Delete a specific user route.
+## Trips
+
+Trips represent the journey from one location to another. Trips are associated with a user (the driver) and a car.
+
+- **GET /api/trips/**: Retrieves a list of all trips. Each trip object includes all Trip model fields.
+- **POST /api/trips/**: Creates a new trip. Requires a JSON body with all the Trip model fields.
+- **GET /api/trips/{id}/**: Retrieves the details of a specific trip identified by its ID.
+- **PUT /api/trips/{id}/**: Updates a specific trip identified by its ID. Requires a JSON body with all the Trip model fields.
+- **DELETE /api/trips/{id}/**: Deletes a specific trip identified by its ID.
+
+## User Routes
+
+User Routes represent the desired travel routes of users. They can be associated with both drivers and passengers.
+
+- **GET /api/user_routes/**: Retrieves a list of all user routes. Each user route object includes all UserRoute model fields.
+- **POST /api/user_routes/**: Creates a new user route. Requires a JSON body with all the UserRoute model fields.
+- **GET /api/user_routes/{id}/**: Retrieves the details of a specific user route identified by its ID.
+- **PUT /api/user_routes/{id}/**: Updates a specific user route identified by its ID. Requires a JSON body with all the UserRoute model fields.
+- **DELETE /api/user_routes/{id}/**: Deletes a specific user route identified by its ID.
